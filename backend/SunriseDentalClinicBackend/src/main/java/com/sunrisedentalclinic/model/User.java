@@ -8,8 +8,13 @@ public class User {
     private String role;
     private String status;
 
-    public User(int userId, String username, String passwordHash,
-                String role, String status) {
+    public User(
+            int userId,
+            String username,
+            String passwordHash,
+            String role,
+            String status
+    ) {
         this.userId = userId;
         this.username = username;
         this.passwordHash = passwordHash;
@@ -25,11 +30,35 @@ public class User {
         return username;
     }
 
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
     public String getRole() {
         return role;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
     public boolean isActive() {
         return "ACTIVE".equalsIgnoreCase(status);
+    }
+
+    public boolean updateStatus(String status) {
+        if (status == null || status.isBlank()) {
+            return false;
+        }
+
+        this.status = status;
+        return true;
+    }
+
+    public String getUserDetails() {
+        return "User ID: " + userId +
+                ", Username: " + username +
+                ", Role: " + role +
+                ", Status: " + status;
     }
 }
