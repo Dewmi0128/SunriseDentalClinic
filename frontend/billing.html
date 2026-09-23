@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Billing - Sunrise Dental Clinic</title>
+
+    <link
+            rel="stylesheet"
+            href="css/style.css"
+    >
+
+
+    <style>
+        .header-content {
+            background: #16c95a;
+            color: white;
+            padding: 22px 45px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-content h1 {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .header-content a {
+            font-size: 15px;
+            opacity: 0.95;
+        }
+
+        .header-content a:hover {
+            text-decoration: underline;
+        }
+
+        .billing-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+
+        .billing-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+
+            box-shadow:
+                    0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .billing-card h2 {
+            margin-bottom: 8px;
+            color: #166534;
+        }
+
+
+        .billing-card > p {
+            margin-bottom: 25px;
+            color: #666;
+        }
+
+
+        /* Billing Search Form */
+
+        .billing-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+
+        .billing-form input {
+            flex: 1;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+            border-radius: 7px;
+
+            font-size: 15px;
+        }
+
+
+        .billing-form input:focus {
+            outline: none;
+            border-color: #198754;
+        }
+
+
+        .calculate-button {
+            background: #198754;
+            color: white;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+
+        .calculate-button:hover {
+            background: #157347;
+        }
+
+
+        /* Messages */
+
+        #billingMessage {
+            display: none;
+
+            padding: 12px;
+
+            border-radius: 7px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* Bill Details */
+
+        #billDetails {
+            display: none;
+        }
+
+
+        .bill-title {
+            color: #166534;
+
+            margin-bottom: 18px;
+
+            border-bottom: 2px solid #198754;
+
+            padding-bottom: 8px;
+        }
+
+
+        .bill-info {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .info-box {
+            background: #f8f9fa;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            border-left: 4px solid #198754;
+        }
+
+
+        .info-label {
+            font-size: 13px;
+
+            color: #666;
+
+            margin-bottom: 5px;
+        }
+
+
+        .info-value {
+            font-size: 15px;
+
+            font-weight: 600;
+
+            color: #333;
+        }
+
+
+        /* Bill Table */
+
+        .bill-table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 15px;
+        }
+
+
+        .bill-table th,
+        .bill-table td {
+            padding: 14px;
+
+            border-bottom: 1px solid #ddd;
+
+            text-align: left;
+        }
+
+
+        .bill-table th {
+            background: #f8f9fa;
+
+            color: #333;
+        }
+
+
+        .bill-table td:last-child,
+        .bill-table th:last-child {
+            text-align: right;
+        }
+
+
+        .total-row {
+            font-size: 18px;
+
+            font-weight: bold;
+        }
+
+
+        .total-row td {
+            border-top: 2px solid #198754;
+
+            border-bottom: none;
+        }
+
+
+        /* Payment Status */
+
+        .payment-status-box {
+            margin-top: 25px;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            background: #f8f9fa;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .payment-status-label {
+            font-weight: 600;
+
+            color: #333;
+        }
+
+
+        #displayPaymentStatus {
+            font-weight: bold;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: #fff3cd;
+
+            color: #664d03;
+        }
+
+
+        /* Buttons */
+
+        .bill-actions {
+            margin-top: 25px;
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .print-button {
+            background: #0d6efd;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: 600;
+        }
+
+
+        .print-button:hover {
+            background: #0b5ed7;
+        }
+
+
+        .pay-button {
+            background: #198754;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: 600;
+        }
+
+
+        .pay-button:hover {
+            background: #157347;
+        }
+
+
+        .pay-button:disabled {
+            background: #6c757d;
+
+            cursor: not-allowed;
+
+            opacity: 0.8;
+        }
+
+
+        .back-button {
+            background: #6c757d;
+
+            color: white;
+
+            padding: 12px 22px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            display: inline-flex;
+
+            align-items: center;
+        }
+
+
+        .back-button:hover {
+            background: #5c636a;
+        }
+
+
+        /* Responsive Design */
+
+        @media (max-width: 700px) {
+
+            .billing-form {
+                flex-direction: column;
+            }
+
+
+            .bill-info {
+                grid-template-columns: 1fr;
+            }
+
+
+            .billing-card {
+                padding: 20px;
+            }
+
+
+            .bill-table {
+                font-size: 14px;
+            }
+
+
+            .payment-status-box {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+        }
+
+
+        /* Print */
+
+        @media print {
+
+            body {
+                background: white;
+            }
+
+
+            .billing-form,
+            #billingMessage,
+            .bill-actions,
+            header {
+                display: none !important;
+            }
+
+
+            .billing-card {
+                box-shadow: none;
+            }
+
+
+            .billing-container {
+                margin: 0 auto;
+            }
+
+
+            .payment-status-box {
+                border: 1px solid #ddd;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="header-content">
+
+        <h1>
+            Sunrise Dental Clinic
+        </h1>
+
+
+        <a
+                href="dashboard.html"
+                class="logout-btn"
+        >
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="billing-container">
+
+
+    <div class="billing-card">
+
+
+        <h2>
+            Calculate Patient Bill
+        </h2>
+
+
+        <p>
+            Enter an appointment number to calculate
+            and view the patient's bill.
+        </p>
+    </div>
+    <div class="billing-card">
+
+        <!-- Billing Form -->
+
+        <form
+                id="billingForm"
+                class="billing-form"
+        >
+
+            <label for="appointmentNo"></label><input
+                    type="text"
+                    id="appointmentNo"
+                    placeholder="Enter appointment number, e.g. A003"
+                    required
+            >
+
+
+            <button
+                    type="submit"
+                    class="calculate-button"
+            >
+                Calculate Bill
+            </button>
+
+        </form>
+
+
+        <!-- Message -->
+
+        <div id="billingMessage"></div>
+
+
+        <!-- Bill Details -->
+
+        <section id="billDetails">
+
+
+            <h3 class="bill-title">
+                Patient Bill
+            </h3>
+
+
+            <!-- Basic Information -->
+
+            <div class="bill-info">
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Appointment Number
+                    </div>
+
+
+                    <div
+                            class="info-value"
+                            id="displayAppointmentNo"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-label">
+                        Patient Name
+                    </div>
+
+
+                    <div
+                            class="info-value"
+                            id="displayPatientName"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Bill Table -->
+
+            <table class="bill-table">
+
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Description
+                    </th>
+
+                    <th>
+                        Amount
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <tr>
+
+                    <td id="displayTreatmentName">
+                        Treatment
+                    </td>
+
+
+                    <td id="displayTreatmentCost">
+                        Rs. 0.00
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Consultation Fee
+                    </td>
+
+
+                    <td id="displayConsultationFee">
+                        Rs. 0.00
+                    </td>
+
+                </tr>
+
+
+                <tr class="total-row">
+
+                    <td>
+                        Total Amount
+                    </td>
+
+
+                    <td id="displayTotalAmount">
+                        Rs. 0.00
+                    </td>
+
+                </tr>
+
+
+                </tbody>
+
+            </table>
+
+
+            <!-- Payment Status -->
+
+            <div class="payment-status-box">
+
+                <span class="payment-status-label">
+                    Payment Status
+                </span>
+
+
+                <strong id="displayPaymentStatus">
+                    PENDING
+                </strong>
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="bill-actions">
+
+
+                <button
+                        type="button"
+                        class="print-button"
+                        onclick="window.print()"
+                >
+                    Print Bill / Receipt
+                </button>
+
+
+                <button
+                        type="button"
+                        id="payButton"
+                        class="pay-button"
+                >
+                    Mark as Paid
+                </button>
+
+
+                <a
+                        href="dashboard.html"
+                        class="back-button"
+                >
+                    Back to Dashboard
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+</main>
+
+
+<script src="js/billing.js"></script>
+
+
+</body>
+
+</html>
