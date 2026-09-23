@@ -16,3 +16,7 @@ target/
 # Operating system files
 Thumbs.db
 .DS_Store
+
+# Local IDE backup
+.idea_backup/
+backend/SunriseDentalClinicBackend/cp.txt
