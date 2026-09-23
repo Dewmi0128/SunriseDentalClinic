@@ -15,11 +15,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(
-            @RequestParam String username,
-            @RequestParam String password) {
+    public String login(@RequestBody LoginRequest request) {
 
-        User user = userService.authenticate(username, password);
+        User user = userService.authenticate(
+                request.getUsername(),
+                request.getPassword()
+        );
 
         if (user == null) {
             return "Invalid username or password";
