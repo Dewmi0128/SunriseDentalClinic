@@ -2,14 +2,24 @@ package com.sunrisedentalclinic.controller;
 
 public class AppointmentRequest {
 
+    private String appointmentNo;
     private int patientId;
     private int dentistId;
     private int treatmentId;
     private String appointmentDate;
     private String appointmentTime;
+    private String status;
     private String notes;
 
     public AppointmentRequest() {
+    }
+
+    public String getAppointmentNo() {
+        return appointmentNo;
+    }
+
+    public void setAppointmentNo(String appointmentNo) {
+        this.appointmentNo = appointmentNo;
     }
 
     public int getPatientId() {
@@ -50,6 +60,14 @@ public class AppointmentRequest {
 
     public void setAppointmentTime(String appointmentTime) {
         this.appointmentTime = appointmentTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getNotes() {
