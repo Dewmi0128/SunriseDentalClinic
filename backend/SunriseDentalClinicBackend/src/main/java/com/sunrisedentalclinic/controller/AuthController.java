@@ -2,6 +2,8 @@ package com.sunrisedentalclinic.controller;
 
 import com.sunrisedentalclinic.model.User;
 import com.sunrisedentalclinic.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +17,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+    public ResponseEntity<String> login(
+            @RequestBody LoginRequest request) {
 
         User user = userService.authenticate(
                 request.getUsername(),
@@ -23,9 +26,14 @@ public class AuthController {
         );
 
         if (user == null) {
-            return "Invalid username or password";
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid username or password");
         }
 
-        return "Login successful. Welcome " + user.getUsername();
+        return ResponseEntity.ok(
+                "Login successful. Welcome " +
+                        user.getUsername()
+        );
     }
 }
