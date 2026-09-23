@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TreatmentDAO {
 
@@ -34,7 +36,6 @@ public class TreatmentDAO {
                             resultSet.getDouble("treatment_cost")
                     );
                 }
-
             }
 
         } catch (SQLException e) {
@@ -42,5 +43,39 @@ public class TreatmentDAO {
         }
 
         return null;
+    }
+
+    public List<Treatment> findAll() {
+
+        String sql = """
+                SELECT treatment_id, treatment_name,
+                       description, treatment_cost
+                FROM treatments
+                ORDER BY treatment_id
+                """;
+
+        List<Treatment> treatments = new ArrayList<>();
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+
+                Treatment treatment = new Treatment(
+                        resultSet.getInt("treatment_id"),
+                        resultSet.getString("treatment_name"),
+                        resultSet.getString("description"),
+                        resultSet.getDouble("treatment_cost")
+                );
+
+                treatments.add(treatment);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to retrieve treatments", e);
+        }
+
+        return treatments;
     }
 }
