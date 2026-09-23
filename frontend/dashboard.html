@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sunrise Dental Clinic - Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <header class="dashboard-header">
+        <div>
+            <h1>Sunrise Dental Clinic</h1>
+            <p>Appointment & Patient Management System</p>
+        </div>
+
+        <button id="logoutButton" class="logout-button">
+            Logout
+        </button>
+    </header>
+
+    <main>
+
+        <section class="welcome-section">
+            <h2>Welcome, Admin</h2>
+            <p>Select an option below to manage the clinic.</p>
+        </section>
+
+        <section class="dashboard-grid">
+
+            <!-- Register Appointment -->
+
+            <div class="dashboard-card">
+
+                <h3>📅 Register Appointment</h3>
+
+                <p>
+                    Register a new patient appointment.
+                </p>
+
+                <button onclick="openAppointmentPage()">
+                    Register Appointment
+                </button>
+
+            </div>
+
+
+            <!-- Search Appointment -->
+
+            <div class="dashboard-card">
+
+                <h3>🔍 Search Appointment</h3>
+
+                <p>
+                    Search and view appointment details.
+                </p>
+
+                <button onclick="openSearchPage()">
+                    Search Appointment
+                </button>
+
+            </div>
+
+
+            <!-- Billing -->
+
+            <div class="dashboard-card">
+
+                <h3>💰 Billing</h3>
+
+                <p>
+                    Calculate and manage patient bills.
+                </p>
+
+                <button onclick="openBillingPage()">
+                    Billing
+                </button>
+
+            </div>
+
+
+            <!-- Help -->
+
+            <div class="dashboard-card">
+
+                <h3>❓ Help</h3>
+
+                <p>
+                    View instructions for using the system.
+                </p>
+
+                <button onclick="openHelpPage()">
+                    Help
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    // Open Register Appointment page
+    function openAppointmentPage() {
+
+        window.location.href = "register-appointment.html";
+
+    }
+
+
+    // Open Search Appointment page
+    function openSearchPage() {
+
+        window.location.href = "search-appointment.html";
+
+    }
+
+
+    // Billing page
+    function openBillingPage() {
+        window.location.href = "billing.html";
+
+    }
+
+
+    // Help page
+    function openHelpPage() {
+        window.location.href = "help.html";
+
+    }
+
+
+    // Logout
+    document
+        .getElementById("logoutButton")
+        .addEventListener("click", function () {
+
+            window.location.href = "index.html";
+
+        });
+
+</script>
+
+</body>
+
+</html>
