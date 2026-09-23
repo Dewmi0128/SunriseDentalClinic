@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register Appointment - Sunrise Dental Clinic</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .patient-mode {
+            display: flex;
+            gap: 25px;
+            margin: 10px 0 20px;
+        }
+
+        .patient-mode label {
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .patient-section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            background: #fafafa;
+        }
+
+        .patient-section h3 {
+            margin-top: 0;
+            color: #176b4d;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .required {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-header">
+    <h1>Sunrise Dental Clinic</h1>
+    <a href="dashboard.html">Back to Dashboard</a>
+</div>
+
+<div class="form-container">
+
+    <h2>Register New Appointment</h2>
+
+    <p class="form-description">
+        Enter the appointment and patient details below to register a new appointment.
+    </p>
+
+    <form id="appointmentForm">
+
+        <!-- Appointment Number -->
+        <div class="form-group">
+            <label for="appointmentNo">
+                Appointment Number <span class="required">*</span>
+            </label>
+
+            <input
+                    type="text"
+                    id="appointmentNo"
+                    name="appointmentNo"
+                    placeholder="Example: A004"
+                    required
+            >
+        </div>
+
+
+        <!-- Patient Information -->
+        <div class="patient-section">
+
+            <h3>Patient Information</h3>
+
+            <div class="patient-mode">
+
+                <label>
+                    <input
+                            type="radio"
+                            name="patientMode"
+                            value="new"
+                            id="newPatientRadio"
+                            checked
+                    >
+                    New Patient
+                </label>
+
+                <label>
+                    <input
+                            type="radio"
+                            name="patientMode"
+                            value="existing"
+                            id="existingPatientRadio"
+                    >
+                    Existing Patient
+                </label>
+
+            </div>
+
+
+            <!-- NEW PATIENT -->
+            <div id="newPatientSection">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="patientName">
+                            Patient Name <span class="required">*</span>
+                        </label>
+
+                        <input
+                                type="text"
+                                id="patientName"
+                                placeholder="Enter patient name"
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="contactNumber">
+                            Contact Number <span class="required">*</span>
+                        </label>
+
+                        <input
+                                type="text"
+                                id="contactNumber"
+                                placeholder="Example: 0771234567"
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="dateOfBirth">
+                            Date of Birth
+                        </label>
+
+                        <input
+                                type="date"
+                                id="dateOfBirth"
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="gender">
+                            Gender
+                        </label>
+
+                        <select id="gender">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="address">
+                        Address <span class="required">*</span>
+                    </label>
+
+                    <textarea
+                            id="address"
+                            rows="3"
+                            placeholder="Enter patient's address"
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXISTING PATIENT -->
+            <div id="existingPatientSection" class="hidden">
+
+                <div class="form-group">
+
+                    <label for="patientSelect">
+                        Select Existing Patient <span class="required">*</span>
+                    </label>
+
+                    <select id="patientSelect">
+
+                        <option value="">
+                            Select Patient
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Dentist and Treatment -->
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label for="dentistSelect">
+                    Dentist <span class="required">*</span>
+                </label>
+
+                <select id="dentistSelect" required>
+
+                    <option value="">
+                        Select Dentist
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="treatmentSelect">
+                    Treatment <span class="required">*</span>
+                </label>
+
+                <select id="treatmentSelect" required>
+
+                    <option value="">
+                        Select Treatment
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="appointmentDate">
+                    Appointment Date <span class="required">*</span>
+                </label>
+
+                <input
+                        type="date"
+                        id="appointmentDate"
+                        required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="appointmentTime">
+                    Appointment Time <span class="required">*</span>
+                </label>
+
+                <input
+                        type="time"
+                        id="appointmentTime"
+                        required
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- Notes -->
+        <div class="form-group">
+
+            <label for="notes">
+                Notes
+            </label>
+
+            <textarea
+                    id="notes"
+                    rows="4"
+                    placeholder="Enter any additional appointment notes..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- Message -->
+        <div id="appointmentMessage"></div>
+
+
+        <!-- Buttons -->
+        <div class="form-actions">
+
+            <button
+                    type="submit"
+                    class="btn-primary"
+            >
+                Register Appointment
+            </button>
+
+            <button
+                    type="button"
+                    class="btn-secondary"
+                    onclick="window.location.href='dashboard.html'"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script src="js/appointment.js"></script>
+
+</body>
+</html>
