@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Search Appointment - Sunrise Dental Clinic</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        .header-content {
+            background: #16c95a;
+            color: white;
+            padding: 22px 45px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-content h1 {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .header-content a {
+            font-size: 15px;
+            opacity: 0.95;
+        }
+
+        .header-content a:hover {
+            text-decoration: underline;
+        }
+
+        .search-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .search-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-card h2 {
+            margin-bottom: 8px;
+            color: #166534;
+        }
+
+        .search-card > p {
+            margin-bottom: 25px;
+            color: #666;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .search-form input:focus {
+            outline: none;
+            border-color: #198754;
+        }
+
+        .search-button {
+            background: #198754;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .search-button:hover {
+            background: #157347;
+        }
+
+        #searchMessage {
+            display: none;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+        #appointmentDetails {
+            display: none;
+        }
+
+        .details-title {
+            color: #166534;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #198754;
+            padding-bottom: 8px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #198754;
+        }
+
+        .detail-box.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .detail-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .patient-section,
+        .dentist-section,
+        .treatment-section {
+            margin-top: 25px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 25px;
+            background: #6c757d;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: #5c636a;
+        }
+
+        @media (max-width: 700px) {
+            .search-form {
+                flex-direction: column;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-box.full-width {
+                grid-column: auto;
+            }
+
+            .search-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+        <h1>Sunrise Dental Clinic</h1>
+
+        <a href="dashboard.html" class="logout-btn">
+            Back to Dashboard
+        </a>
+    </div>
+</header>
+
+<main class="search-container">
+
+    <div class="search-card">
+
+        <h2>Search Appointment</h2>
+
+        <p>
+            Enter an appointment number to view the complete appointment details.
+        </p>
+
+        <form id="searchForm" class="search-form">
+
+            <label for="appointmentNo"></label><input
+                    type="text"
+                    id="appointmentNo"
+                    placeholder="Enter appointment number, e.g. A003"
+                    required
+            >
+
+            <button
+                    type="submit"
+                    class="search-button"
+            >
+                Search Appointment
+            </button>
+
+        </form>
+
+        <div id="searchMessage"></div>
+
+        <section id="appointmentDetails">
+
+            <h3 class="details-title">
+                Appointment Details
+            </h3>
+
+            <div class="details-grid">
+
+                <div class="detail-box">
+                    <div class="detail-label">
+                        Appointment Number
+                    </div>
+
+                    <div
+                            class="detail-value"
+                            id="displayAppointmentNo"
+                    ></div>
+                </div>
+
+                <div class="detail-box">
+                    <div class="detail-label">
+                        Status
+                    </div>
+
+                    <div
+                            class="detail-value"
+                            id="displayStatus"
+                    ></div>
+                </div>
+
+            </div>
+
+            <!-- Patient Information -->
+
+            <div class="patient-section">
+
+                <h3 class="details-title">
+                    Patient Information
+                </h3>
+
+                <div class="details-grid">
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Patient Name
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayPatientName"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Contact Number
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayPatientContact"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Address
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayPatientAddress"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Date of Birth
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayPatientDob"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Gender
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayPatientGender"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Dentist Information -->
+
+            <div class="dentist-section">
+
+                <h3 class="details-title">
+                    Dentist Information
+                </h3>
+
+                <div class="details-grid">
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Dentist Name
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayDentistName"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Specialization
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayDentistSpecialization"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Contact Number
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayDentistContact"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Availability
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayDentistAvailability"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Treatment Information -->
+
+            <div class="treatment-section">
+
+                <h3 class="details-title">
+                    Treatment Information
+                </h3>
+
+                <div class="details-grid">
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Treatment
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayTreatmentName"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Treatment Cost
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayTreatmentCost"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box full-width">
+                        <div class="detail-label">
+                            Description
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayTreatmentDescription"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Appointment Schedule -->
+
+            <div class="treatment-section">
+
+                <h3 class="details-title">
+                    Appointment Schedule
+                </h3>
+
+                <div class="details-grid">
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Appointment Date
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayAppointmentDate"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-label">
+                            Appointment Time
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayAppointmentTime"
+                        ></div>
+                    </div>
+
+                    <div class="detail-box full-width">
+                        <div class="detail-label">
+                            Notes
+                        </div>
+
+                        <div
+                                class="detail-value"
+                                id="displayNotes"
+                        ></div>
+                    </div>
+
+                </div>
+                <div id="cancelSection" class="cancel-section hidden">
+
+                    <button
+                            type="button"
+                            id="cancelAppointmentButton"
+                            class="cancel-button">
+                        Cancel Appointment
+                    </button>
+
+                </div>
+            </div>
+
+        </section>
+
+        <a
+                href="dashboard.html"
+                class="back-button"
+        >
+            Back to Dashboard
+        </a>
+
+
+    </div>
+
+
+</main>
+
+<script src="js/search-appointment.js"></script>
+
+</body>
+</html>
